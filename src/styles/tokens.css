@@ -1,0 +1,19 @@
+:root {
+  color-scheme: dark;
+  --background: #030c09;
+  --surface: #07120f;
+  --surface-raised: #0b1a14;
+  --text: #d3ded4;
+  --muted: #a4b1a9;
+  --subtle: #889b91;
+  --accent: #75aa8d;
+  --accent-bright: #a6cbb1;
+  --border: rgba(124, 167, 142, 0.24);
+  --border-hover: rgba(124, 167, 142, 0.52);
+  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-brand: 'Cinzel', Georgia, serif;
+  --radius: 6px;
+  --sidebar-width: 230px;
+  --content-gap: 22px;
+}

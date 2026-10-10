@@ -1,0 +1,36 @@
+name: Verificar permissões do banco
+
+on:
+  workflow_call:
+
+jobs:
+  policies:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_PASSWORD: sonserina-ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGPORT: 5432
+      PGUSER: postgres
+      PGDATABASE: postgres
+      PGPASSWORD: sonserina-ci
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preparar banco temporário
+        run: |
+          psql -X -v ON_ERROR_STOP=1 -f supabase/tests/bootstrap.sql
+          for portal_migration in supabase/migrations/*.sql; do
+            psql -X -v ON_ERROR_STOP=1 -f "$portal_migration"
+          done
+      - name: Verificar permissões e integridade
+        run: psql -X -v ON_ERROR_STOP=1 -f supabase/tests/portal_rls.sql

@@ -1,4 +1,4 @@
-import type { Activity, PageId, SubjectId } from '../types/portal';
+import type { Activity, PageId, Subject, SubjectId } from '../types/portal';
 import { sortByDeadline } from '../lib/calendar';
 import ActivitiesPanel from '../components/ActivitiesPanel';
 import Calendar from '../components/Calendar';
@@ -9,16 +9,20 @@ import WelcomeBanner from '../components/WelcomeBanner';
 
 export default function Home({
   activities,
+  subjects,
   onNavigate,
   onSelectActivity,
   onSelectSubject,
   onSelectDate,
+  onCreateSubject,
 }: {
   activities: Activity[];
+  subjects: Subject[];
   onNavigate: (page: PageId) => void;
   onSelectActivity: (id: string) => void;
   onSelectSubject: (id: SubjectId) => void;
   onSelectDate: (date: string) => void;
+  onCreateSubject?: () => void;
 }) {
   const openActivities = sortByDeadline(
     activities.filter((activity) => activity.status === 'open'),
@@ -28,8 +32,13 @@ export default function Home({
       <WelcomeBanner />
       <div className="dashboard-grid">
         <div className="dashboard-primary">
-          <SummaryCards activities={activities} onNavigate={onNavigate} />
+          <SummaryCards
+            activities={activities}
+            subjectCount={subjects.length}
+            onNavigate={onNavigate}
+          />
           <ActivitiesPanel
+            subjects={subjects}
             activities={openActivities.slice(0, 5)}
             onSelect={onSelectActivity}
             onViewAll={() => onNavigate('atividades')}
@@ -37,7 +46,11 @@ export default function Home({
           />
         </div>
         <div className="dashboard-secondary">
-          <SubjectsPanel onSelect={onSelectSubject} />
+          <SubjectsPanel
+            subjects={subjects}
+            onSelect={onSelectSubject}
+            onCreate={onCreateSubject}
+          />
           <Calendar activities={activities} onSelect={onSelectDate} />
           <MotivationCard />
         </div>

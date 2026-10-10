@@ -15,7 +15,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  database:
+    uses: ./.github/workflows/database.yml
   build:
+    needs: database
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

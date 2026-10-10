@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Activity } from '../types/portal';
+import type { Activity, Subject } from '../types/portal';
 import { formatDate, localDateKey, sortByDeadline } from '../lib/calendar';
 import Calendar from '../components/Calendar';
 import PageHeading from '../components/PageHeading';
@@ -7,10 +7,12 @@ import ActivitiesPanel from '../components/ActivitiesPanel';
 
 export default function CalendarPage({
   activities,
+  subjects,
   initialDate,
   onSelectActivity,
 }: {
   activities: Activity[];
+  subjects: Subject[];
   initialDate?: string;
   onSelectActivity: (id: string) => void;
 }) {
@@ -35,6 +37,7 @@ export default function CalendarPage({
         />
         <div className="calendar-agenda">
           <ActivitiesPanel
+            subjects={subjects}
             title={`Prazos de ${formatDate(selectedDate)}`}
             activities={selected}
             onSelect={onSelectActivity}

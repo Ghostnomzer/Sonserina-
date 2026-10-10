@@ -1,5 +1,5 @@
 export type PageId = 'inicio' | 'atividades' | 'calendario' | 'disciplinas' | 'avisos' | 'perfil';
-export type SubjectId = 'pocoes' | 'defesa' | 'transfiguracao' | 'historia' | 'criaturas' | 'artes';
+export type SubjectId = string;
 export type ActivityStatus = 'open' | 'completed';
 export type SubjectIcon = 'flask' | 'shield' | 'wand' | 'book' | 'plant' | 'skull';
 
@@ -27,9 +27,10 @@ export interface Profile {
 }
 
 export interface PortalState {
-  version: 1;
+  subjects: Subject[];
   activities: Activity[];
   profile: Profile;
+  notices: Notice[];
   readNotices: string[];
 }
 

@@ -1,13 +1,14 @@
 import { BookOpen, CalendarDays, ClipboardList } from 'lucide-react';
-import { subjects } from '../data/portal';
 import { upcomingActivities } from '../lib/calendar';
 import type { Activity, PageId } from '../types/portal';
 
 export default function SummaryCards({
   activities,
+  subjectCount,
   onNavigate,
 }: {
   activities: Activity[];
+  subjectCount: number;
   onNavigate: (page: PageId) => void;
 }) {
   const items = [
@@ -24,7 +25,7 @@ export default function SummaryCards({
       page: 'calendario' as const,
       hint: 'Prazos nos próximos 7 dias',
     },
-    { label: 'Disciplinas', count: subjects.length, icon: BookOpen, page: 'disciplinas' as const },
+    { label: 'Disciplinas', count: subjectCount, icon: BookOpen, page: 'disciplinas' as const },
   ];
   return (
     <div className="summary-grid">

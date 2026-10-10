@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import { Plus, Search, X } from 'lucide-react';
-import { subjectById, subjects } from '../data/portal';
+import { subjectById } from '../data/portal';
 import { sortByDeadline } from '../lib/calendar';
-import type { Activity, SubjectId } from '../types/portal';
+import type { Activity, Subject, SubjectId } from '../types/portal';
 import ActivitiesPanel from '../components/ActivitiesPanel';
 import PageHeading from '../components/PageHeading';
 
@@ -15,16 +15,18 @@ function normalize(value: string) {
 
 export default function Activities({
   activities,
+  subjects,
   subjectFilter,
   onFilterSubject,
   onSelect,
   onCreate,
 }: {
   activities: Activity[];
+  subjects: Subject[];
   subjectFilter: SubjectId | 'all';
   onFilterSubject: (id: SubjectId | 'all') => void;
   onSelect: (id: string) => void;
-  onCreate: () => void;
+  onCreate?: () => void;
 }) {
   const [query, setQuery] = useState('');
   const [status, setStatus] = useState<'all' | 'open' | 'completed'>('all');
@@ -36,11 +38,11 @@ export default function Activities({
             (subjectFilter === 'all' || activity.subjectId === subjectFilter) &&
             (status === 'all' || activity.status === status) &&
             normalize(
-              `${activity.title} ${activity.description} ${subjectById(activity.subjectId).name}`,
+              `${activity.title} ${activity.description} ${subjectById(subjects, activity.subjectId)?.name ?? ''}`,
             ).includes(normalize(query)),
         ),
       ),
-    [activities, subjectFilter, status, query],
+    [activities, subjects, subjectFilter, status, query],
   );
   const openCount = activities.filter((activity) => activity.status === 'open').length;
 
@@ -51,10 +53,12 @@ export default function Activities({
         title="Minhas Atividades"
         description="Organize seus próximos passos. Cada entrega é uma conquista."
       >
-        <button className="button button-primary" onClick={onCreate}>
-          <Plus size={18} />
-          Nova atividade
-        </button>
+        {onCreate && (
+          <button className="button button-primary" onClick={onCreate}>
+            <Plus size={18} />
+            Nova atividade
+          </button>
+        )}
       </PageHeading>
       <section className="activity-toolbar panel" aria-label="Filtros de atividades">
         <div className="filter-top">
@@ -110,13 +114,16 @@ export default function Activities({
         </div>
       </section>
       <ActivitiesPanel
+        subjects={subjects}
         activities={filtered}
         title={`${filtered.length} ${filtered.length === 1 ? 'atividade encontrada' : 'atividades encontradas'}`}
         onSelect={onSelect}
         emptyMessage={
           activities.length
             ? 'Nenhuma atividade corresponde aos filtros. Experimente outra busca ou disciplina.'
-            : 'Seu planejamento começa aqui. Crie sua primeira atividade.'
+            : onCreate
+              ? 'Cadastre a primeira atividade da casa.'
+              : 'As atividades cadastradas pelo administrador aparecerão aqui.'
         }
       />
     </>

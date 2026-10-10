@@ -1,6 +1,15 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { createInitialState } from '../data/portal';
+import type { Activity } from '../types/portal';
+
+const task: Activity = {
+  id: 'task',
+  subjectId: 'subject',
+  title: 'Entrega',
+  description: '',
+  dueDate: '2026-10-10',
+  status: 'open',
+};
 import {
   addDays,
   dateFromKey,
@@ -56,8 +65,7 @@ test('local calendar dates preserve their day in eastern and western time zones'
 });
 
 test('upcoming deadlines include today and day seven, excluding overdue and completed tasks', () => {
-  const state = createInitialState(dateFromKey('2026-10-10'));
-  const base = state.activities[0];
+  const base = task;
   const activities = [
     { ...base, id: 'overdue', dueDate: '2026-10-09' },
     { ...base, id: 'today', dueDate: '2026-10-10' },
@@ -69,11 +77,13 @@ test('upcoming deadlines include today and day seven, excluding overdue and comp
     upcomingActivities(activities, dateFromKey('2026-10-10')).map((activity) => activity.id),
     ['today', 'edge'],
   );
-  assert.equal(upcomingActivities(state.activities, dateFromKey('2026-10-10')).length, 3);
 });
 
 test('deadline sorting does not mutate stored activities', () => {
-  const activities = createInitialState().activities.reverse();
+  const activities = [
+    { ...task, id: 'later', dueDate: '2026-10-15' },
+    { ...task, id: 'earlier', dueDate: '2026-10-09' },
+  ];
   const order = activities.map((activity) => activity.id);
   const sorted = sortByDeadline(activities);
   assert.deepEqual(

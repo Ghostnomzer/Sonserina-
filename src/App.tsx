@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Check, LoaderCircle, LogIn, LogOut, RefreshCw, ShieldCheck, X } from 'lucide-react';
 import { usePortal } from './hooks/usePortal';
 import { useAsyncAction } from './hooks/useAsyncAction';
+import { useMotionPreference } from './hooks/useMotionPreference';
 import { subjectById } from './data/portal';
 import type { Activity, Notice, PageId, Subject, SubjectId } from './types/portal';
 import Header from './components/Header';
@@ -34,6 +35,7 @@ function currentPage(): PageId {
 export default function App() {
   const portal = usePortal();
   const sessionAction = useAsyncAction();
+  const motion = useMotionPreference();
   const [page, setPage] = useState<PageId>(currentPage);
   const [menuOpen, setMenuOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
@@ -108,7 +110,7 @@ export default function App() {
   const detail = portal.state.activities.find((activity) => activity.id === detailId);
 
   return (
-    <div className="portal-shell">
+    <div className="portal-shell" data-motion={motion.enabled ? 'enabled' : 'paused'}>
       <a
         href="#main-content"
         className="skip-link"
@@ -124,6 +126,8 @@ export default function App() {
         profile={portal.state.profile}
         menuOpen={menuOpen}
         onToggleMenu={() => setMenuOpen((current) => !current)}
+        motionEnabled={motion.enabled}
+        onToggleMotion={motion.toggle}
       />
       <div className="portal-body">
         <Sidebar page={page} open={menuOpen} onClose={closeMenu} />

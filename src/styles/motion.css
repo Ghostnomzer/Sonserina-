@@ -1,96 +1,192 @@
-/* Movimentos decorativos somente quando o aparelho permite animações. */
-@media (prefers-reduced-motion: no-preference) {
-  .serpent-animated {
-    --serpent-duration: 9s;
-    --serpent-delay: -1.4s;
-    transform-box: view-box;
-    transform-origin: 50% 85%;
-    animation: serpent-sway var(--serpent-duration) ease-in-out var(--serpent-delay) infinite;
+/* O botão segue a preferência do aparelho até a pessoa escolher ativar ou pausar. */
+.site-header::before {
+  z-index: 1;
+}
+
+.header-inner {
+  z-index: 2;
+}
+
+.header-serpent-scene {
+  display: none;
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+}
+
+.motion-toggle {
+  position: absolute;
+  right: 28px;
+  bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 5px 9px;
+  border: 1px solid #729d8052;
+  border-radius: 4px;
+  background: #061710cc;
+  color: #c8decf;
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.motion-toggle:hover {
+  background: #193e2ccc;
+  border-color: #8cba99;
+}
+
+[data-motion='enabled'] .header-serpent-scene {
+  display: block;
+}
+
+/* A máscara fica parada; somente a região da cobra acompanha o movimento. */
+[data-motion='enabled'] .header-serpent-image {
+  transform-box: view-box;
+  transform-origin: 1660px 610px;
+  animation: header-serpent-sway 4.2s ease-in-out -0.9s infinite;
+  animation-duration: 4.2s !important;
+  animation-iteration-count: infinite !important;
+}
+
+[data-motion='enabled'] .serpent-animated {
+  --serpent-duration: 4.8s;
+  --serpent-delay: -0.6s;
+  transform-box: view-box;
+  transform-origin: 50% 85%;
+  animation: serpent-sway var(--serpent-duration) ease-in-out var(--serpent-delay) infinite;
+}
+
+[data-motion='enabled'] .serpent-animated .serpent-head {
+  transform-box: view-box;
+  transform-origin: 24px 9px;
+  animation: serpent-head-turn var(--serpent-duration) ease-in-out var(--serpent-delay) infinite;
+}
+
+[data-motion='enabled'] .serpent-animated,
+[data-motion='enabled'] .serpent-animated .serpent-head {
+  animation-duration: var(--serpent-duration) !important;
+  animation-iteration-count: infinite !important;
+}
+
+[data-motion='enabled'] .serpent-animated .serpent-tongue {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: serpent-tongue-flick 2.6s linear var(--serpent-delay) infinite;
+  animation-duration: 2.6s !important;
+  animation-iteration-count: infinite !important;
+}
+
+[data-motion='enabled'] .header-greeting .serpent-animated {
+  --serpent-duration: 4s;
+  --serpent-delay: -1.2s;
+}
+
+[data-motion='enabled'] .drawer-heading .serpent-animated {
+  --serpent-duration: 4.2s;
+  --serpent-delay: -0.4s;
+}
+
+[data-motion='enabled'] .sidebar-quote .serpent-animated {
+  --serpent-duration: 5s;
+  --serpent-delay: -1.5s;
+}
+
+[data-motion='enabled'] .footer-signature .serpent-animated {
+  --serpent-duration: 5.4s;
+  --serpent-delay: -2s;
+}
+
+[data-motion='enabled'] .motivation-serpent {
+  transform-origin: 50% 94%;
+  animation: serpent-breathe 4s ease-in-out -0.7s infinite;
+  animation-duration: 4s !important;
+  animation-iteration-count: infinite !important;
+}
+
+@media (max-width: 760px) {
+  .header-serpent-scene {
+    width: 930px;
+    height: 310px;
+    left: calc(58% - 539.4px);
   }
 
-  .serpent-animated .serpent-head {
-    transform-box: view-box;
-    transform-origin: 24px 9px;
-    animation: serpent-head-turn var(--serpent-duration) ease-in-out var(--serpent-delay) infinite;
+  .motion-toggle {
+    left: 16px;
+    right: auto;
+    bottom: 9px;
+    min-height: 25px;
+    padding: 4px 7px;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-serpent-scene {
+    width: 750px;
+    height: 250px;
+    left: calc(49% - 367.5px);
   }
 
-  .serpent-animated .serpent-tongue {
-    transform-box: fill-box;
-    transform-origin: left center;
-    animation: serpent-tongue-flick 6.8s linear var(--serpent-delay) infinite;
+  .motion-toggle {
+    left: 12px;
+    bottom: 7px;
   }
+}
 
-  .header-greeting .serpent-animated {
-    --serpent-duration: 8.2s;
-    --serpent-delay: -2.5s;
+@keyframes header-serpent-sway {
+  0%,
+  100% {
+    transform: translate(-14px, 5px) rotate(-1.5deg) scale(1.035);
   }
-
-  .drawer-heading .serpent-animated {
-    --serpent-duration: 8.8s;
-    --serpent-delay: -0.9s;
-  }
-
-  .sidebar-quote .serpent-animated {
-    --serpent-duration: 10.4s;
-    --serpent-delay: -4.1s;
-  }
-
-  .footer-signature .serpent-animated {
-    --serpent-duration: 11.6s;
-    --serpent-delay: -7.2s;
-  }
-
-  .motivation-serpent {
-    transform-origin: 50% 94%;
-    animation: serpent-breathe 10.5s ease-in-out -3.4s infinite;
+  50% {
+    transform: translate(16px, 2px) rotate(1.5deg) scale(1.035);
   }
 }
 
 @keyframes serpent-sway {
   0%,
   100% {
-    transform: translateY(0) rotate(-2deg);
+    transform: translate(-2px, 0) rotate(-8deg);
   }
-  35% {
-    transform: translateY(-1.5px) rotate(2.5deg);
-  }
-  70% {
-    transform: translateY(-0.5px) rotate(-1deg);
+  50% {
+    transform: translate(3px, -4px) rotate(9deg);
   }
 }
 
 @keyframes serpent-head-turn {
   0%,
   100% {
-    transform: rotate(-1.5deg);
+    transform: rotate(-5deg);
   }
-  35% {
-    transform: rotate(4deg);
-  }
-  70% {
-    transform: rotate(-2.5deg);
+  50% {
+    transform: rotate(9deg);
   }
 }
 
 @keyframes serpent-tongue-flick {
   0%,
-  68%,
-  80%,
+  50%,
+  77%,
   100% {
     transform: scaleX(0.15);
     opacity: 0;
   }
-  69%,
-  71%,
-  75%,
-  77% {
-    transform: scaleX(1);
+  53%,
+  58%,
+  67%,
+  72% {
+    transform: scaleX(1.25);
     opacity: 1;
   }
-  72%,
-  76%,
-  79% {
-    transform: scaleX(0.35);
+  61%,
+  75% {
+    transform: scaleX(0.3);
     opacity: 0.6;
   }
 }
@@ -98,12 +194,9 @@
 @keyframes serpent-breathe {
   0%,
   100% {
-    transform: translateY(0) rotate(-1.5deg) scale(1);
+    transform: translate(-4px, 0) rotate(-7deg) scale(1);
   }
-  45% {
-    transform: translateY(-3px) rotate(2deg) scale(1.035);
-  }
-  75% {
-    transform: translateY(-1px) rotate(-0.5deg) scale(1.012);
+  50% {
+    transform: translate(5px, -7px) rotate(8deg) scale(1.08);
   }
 }

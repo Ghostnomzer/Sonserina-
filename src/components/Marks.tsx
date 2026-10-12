@@ -15,18 +15,37 @@ export function SubjectIcon({ type, size = 22 }: { type: IconType; size?: number
   return <Icon size={size} strokeWidth={1.5} aria-hidden="true" />;
 }
 
-export function SerpentMark({ className = '' }: { className?: string }) {
+export function SerpentMark({
+  className = '',
+  animated = false,
+}: {
+  className?: string;
+  animated?: boolean;
+}) {
   return (
-    <svg className={`serpent-mark ${className}`} viewBox="0 0 40 48" fill="none" aria-hidden="true">
+    <svg
+      className={`serpent-mark${animated ? ' serpent-animated' : ''} ${className}`}
+      viewBox="0 0 40 48"
+      fill="none"
+      aria-hidden="true"
+    >
       <path
         d="M25 7c-9-4-18 5-14 12 3 5 15 2 18 8 5 10-8 19-17 13-7-5-3-12 3-12 5 0 8 5 4 8"
         stroke="currentColor"
         strokeWidth="3.3"
         strokeLinecap="round"
       />
-      <path d="m24 3 6 6-9 4 2-5Z" fill="currentColor" />
-      <circle cx="25.5" cy="7.7" r=".8" fill="#07120e" />
-      <path d="m29 9 5 1m-2-1 2-1" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+      <g className="serpent-head">
+        <path d="m24 3 6 6-9 4 2-5Z" fill="currentColor" />
+        <circle cx="25.5" cy="7.7" r=".8" fill="#07120e" />
+        <path
+          className="serpent-tongue"
+          d="m29 9 5 1m-2-1 2-1"
+          stroke="currentColor"
+          strokeWidth="1"
+          strokeLinecap="round"
+        />
+      </g>
     </svg>
   );
 }

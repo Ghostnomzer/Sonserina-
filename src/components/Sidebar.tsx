@@ -72,7 +72,7 @@ export default function Sidebar({
       >
         <div className="sidebar-inner">
           <div className="drawer-heading">
-            <SerpentMark />
+            <SerpentMark animated />
             <span>Sala comunal</span>
             <button className="icon-button" onClick={onClose} aria-label="Fechar menu">
               <X size={22} />
@@ -96,7 +96,7 @@ export default function Sidebar({
             </ul>
           </nav>
           <div className="sidebar-quote">
-            <SerpentMark />
+            <SerpentMark animated />
             <blockquote>
               Grandes conquistas começam com pequenos passos bem direcionados.
             </blockquote>

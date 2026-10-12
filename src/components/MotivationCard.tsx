@@ -4,7 +4,14 @@ import { Ornament } from './Marks';
 export default function MotivationCard() {
   return (
     <section className="motivation-card panel">
-      <img src={asset('images/serpent.webp')} alt="" width="92" height="115" loading="lazy" />
+      <img
+        className="motivation-serpent"
+        src={asset('images/serpent.webp')}
+        alt=""
+        width="92"
+        height="115"
+        loading="lazy"
+      />
       <p>
         <strong>Disciplina</strong>
         <br />é o que transforma

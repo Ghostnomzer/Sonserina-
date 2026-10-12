@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="footer-signature">
         <span className="footer-line" />
         <div>
-          <SerpentMark />
+          <SerpentMark animated />
           <span>Sonserina</span>
         </div>
         <span className="footer-line" />

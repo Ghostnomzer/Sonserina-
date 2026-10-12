@@ -1,0 +1,109 @@
+/* Movimentos decorativos somente quando o aparelho permite animações. */
+@media (prefers-reduced-motion: no-preference) {
+  .serpent-animated {
+    --serpent-duration: 9s;
+    --serpent-delay: -1.4s;
+    transform-box: view-box;
+    transform-origin: 50% 85%;
+    animation: serpent-sway var(--serpent-duration) ease-in-out var(--serpent-delay) infinite;
+  }
+
+  .serpent-animated .serpent-head {
+    transform-box: view-box;
+    transform-origin: 24px 9px;
+    animation: serpent-head-turn var(--serpent-duration) ease-in-out var(--serpent-delay) infinite;
+  }
+
+  .serpent-animated .serpent-tongue {
+    transform-box: fill-box;
+    transform-origin: left center;
+    animation: serpent-tongue-flick 6.8s linear var(--serpent-delay) infinite;
+  }
+
+  .header-greeting .serpent-animated {
+    --serpent-duration: 8.2s;
+    --serpent-delay: -2.5s;
+  }
+
+  .drawer-heading .serpent-animated {
+    --serpent-duration: 8.8s;
+    --serpent-delay: -0.9s;
+  }
+
+  .sidebar-quote .serpent-animated {
+    --serpent-duration: 10.4s;
+    --serpent-delay: -4.1s;
+  }
+
+  .footer-signature .serpent-animated {
+    --serpent-duration: 11.6s;
+    --serpent-delay: -7.2s;
+  }
+
+  .motivation-serpent {
+    transform-origin: 50% 94%;
+    animation: serpent-breathe 10.5s ease-in-out -3.4s infinite;
+  }
+}
+
+@keyframes serpent-sway {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  35% {
+    transform: translateY(-1.5px) rotate(2.5deg);
+  }
+  70% {
+    transform: translateY(-0.5px) rotate(-1deg);
+  }
+}
+
+@keyframes serpent-head-turn {
+  0%,
+  100% {
+    transform: rotate(-1.5deg);
+  }
+  35% {
+    transform: rotate(4deg);
+  }
+  70% {
+    transform: rotate(-2.5deg);
+  }
+}
+
+@keyframes serpent-tongue-flick {
+  0%,
+  68%,
+  80%,
+  100% {
+    transform: scaleX(0.15);
+    opacity: 0;
+  }
+  69%,
+  71%,
+  75%,
+  77% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  72%,
+  76%,
+  79% {
+    transform: scaleX(0.35);
+    opacity: 0.6;
+  }
+}
+
+@keyframes serpent-breathe {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1.5deg) scale(1);
+  }
+  45% {
+    transform: translateY(-3px) rotate(2deg) scale(1.035);
+  }
+  75% {
+    transform: translateY(-1px) rotate(-0.5deg) scale(1.012);
+  }
+}

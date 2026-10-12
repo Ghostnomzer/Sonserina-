@@ -38,7 +38,7 @@ export default function Header({
         <div className="header-greeting">
           <span>Olá, {profile.name.trim() || 'membro da Sonserina'}!</span>
           <p>Que sua disciplina te leve longe.</p>
-          <SerpentMark />
+          <SerpentMark animated />
         </div>
         <button
           id="menu-toggle"

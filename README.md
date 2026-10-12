@@ -1,6 +1,6 @@
 # Portal da Sonserina
 
-Portal acadêmico em React, TypeScript e Vite, com o visual da Sonserina e persistência preparada para Supabase. Interface em português, responsiva e acessível por teclado.
+Portal acadêmico em React, TypeScript e Vite, com o visual da Sonserina e persistência no Supabase. Interface em português, responsiva e acessível por teclado.
 
 **Site:** https://ghostnomzer.github.io/Sonserina-/
 
@@ -38,7 +38,11 @@ npm run preview
 
 ## Configurar o Supabase
 
-A conexão precisa de um projeto Supabase dedicado. Enquanto `src/config/supabase.ts` estiver vazio, o portal exibe os estados vazios e informa que está sendo preparado; o login e o salvamento ainda não ficam disponíveis.
+A versão publicada usa o [projeto Sonserina no Supabase](https://supabase.com/dashboard/project/cejdenwpcwcqohunawwj), na região de São Paulo. A URL e a chave publishable estão configuradas em `src/config/supabase.ts`; o esquema e as permissões já foram aplicados ao banco. O e-mail escolhido para administração foi autorizado diretamente no projeto, sem criar uma senha ou uma conta automaticamente.
+
+O administrador deve criar sua conta no portal, confirmar o e-mail e entrar para cadastrar as primeiras disciplinas, atividades e avisos. Confira as URLs de autenticação do passo 4 para que os links de confirmação e recuperação retornem ao site.
+
+Para recriar a conexão em outro projeto:
 
 1. Crie o projeto na organização escolhida.
 2. Aplique a migração em `supabase/migrations/` ao projeto, usando o fluxo de migrações do Supabase ou o SQL Editor. A migração não insere dados de exemplo.
@@ -82,7 +86,7 @@ src/
   components/             Blocos visuais, formulários e diálogos
   pages/                  Início, atividades, calendário, disciplinas, avisos e perfil
   data/portal.ts          Estado inicial vazio e opções de ícones
-  types/                  Tipos da aplicação e do banco
+  types/                  Tipos da aplicação e tipos gerados do banco Supabase
   styles/                 Tema, fontes e comportamento responsivo
 supabase/
   config.toml             Configuração para desenvolvimento local
